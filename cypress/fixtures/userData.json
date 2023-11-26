@@ -1,0 +1,20 @@
+{
+  "valid" : {
+    "valid_user" : "chandraindras31@gmail.com",
+    "valid_password" : "Chandra2018"
+  },
+  "invalid" : [
+    {
+      "invalid_user" : "ABC123",
+      "invalid_password" : "ABC123"
+    },
+    {
+      "invalid_user" : "locked_out_user",
+      "invalid_password" : "secret_sauce"
+    },
+    {
+      "invalid_user" : "standard_user",
+      "invalid_pass" : "secret_sauce12345"
+    }
+  ]
+}
