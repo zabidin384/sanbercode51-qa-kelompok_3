@@ -5,38 +5,42 @@ describe('Verify Login Functionality', () => {
         cy.visit('https://magento.softwaretestingboard.com/')
         cy.contains('Sign In').click()
     })
-    it.only('Failed Login - Locked User', () => {
+    it('Success Login - Valid Username and Password', () =>{
+        cy.visit('')
+        cy.contains('Sign In').click()
+        cy.login('chandraindras31@gmail.com', 'Chandra2018')
+        cy.contains('Welcome, Chandra Kirana!')
+    })
+    it('Failed Login - Wrong Username', () => {
+        cy.visit('')
+        cy.contains('Sign In').click()
+        cy.login('chandraindras31@', 'Chandra2018')
+        cy.contains('Please enter a valid email address (Ex: johndoe@domain.com).').should('be.visible')
+    })
+    it('Failed Login - Wrong password', () =>{
         cy.visit('')
         cy.contains('Sign In').click()
         cy.login('chandraindras31@gmail.com', '12345678')
         cy.contains('The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.').should('be.visible')
     })
-    it('Failed Login - Wrong password', () =>{
-        cy.visit('')
-        cy.get('#email').type(standard_user)
-        cy.get('[data-test="password"]').type(userData.valid[0].valid_password)
-        cy.get('.submit-button.btn_action').click()
-        cy.get('[data-test="error"]').should('contain','Username and password is wrong!')
-    })
-    it('Success Login - Wrong password', () =>{
-        cy.visit('')
-        cy.get('#email').type(standard_user)
-        cy.get('[data-test="password"]').type(secret_sauce)
-        cy.get('.submit-button.btn_action').click()
-        cy.url().should('include','/iventory.html')
-    })
-    it('Failed Login - Wrong creds CUSTOM COMMAND', () => {
-        cy.visit('')
-        cy.login('kirana','QAengineer')
-        cy.verifyContain('[data-test="error"]', 'Username and password do not match!')
-    })
-    it('Failed Multiple Login', () => {
+    it('Failed Login - Wrong Username and Password', () => {
         cy.visit('')
         cy.contains('Sign In').click()
-        cy.fixture('userData.json').then((user) => {
-        user.invalid.forEach((data) => {
-            cy.login(userData.invalid[0].invalid_user, userData.invalid[0].invalid_pass)
-        })
-        })
+        cy.login('chandraindras31', 'Chandra201856')
+        cy.contains('Please enter a valid email address (Ex: johndoe@domain.com).').should('be.visible')
+    })
+    it('Failed Login - Forgot Password and Valid Email', () => {
+        cy.visit('')
+        cy.contains('Sign In').click()
+        cy.contains('Forgot Your Password?').click()
+        cy.forgot('chandraindras31@gmail.com')
+        cy.contains('Reset My Password').click()
+    })
+    it('Failed Login - Forgot Password and Invalid Email', () => {
+        cy.visit('')
+        cy.contains('Sign In').click()
+        cy.contains('Forgot Your Password?').click()
+        cy.forgot('chandraindras31')
+        cy.contains('Reset My Password').click()
     })
 })
