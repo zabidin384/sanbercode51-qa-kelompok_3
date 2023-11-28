@@ -5,8 +5,8 @@ describe('Choose Product', () => {
   })
   it('Selects a Product --for Women', () => {
       cy.contains("Women").click()
-      cy.contains('Radiant Tee').click()
-      cy.get('#option-label-size-143-item-168').click()
+      cy.contains('Selene Yoga Hoodie').click()
+      cy.get('#option-label-size-143-item-166').click()
       cy.get('#option-label-color-93-item-56').click()
       cy.get('#product-addtocart-button').click()
       cy.get('#maincontent').should('contain', 'You added Radiant Tee to your shopping cart.')
